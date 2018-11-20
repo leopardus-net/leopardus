@@ -1,0 +1,25 @@
+{
+    "name": "leopardus/install",
+    "description": "Module System installer",
+    "authors": [
+        {
+            "name": "Leopardus",
+            "email": "contact@leoardus.net"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Install\\Providers\\InstallServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Install\\": ""
+        }
+    }
+}
