@@ -1,14 +1,7 @@
 <?php
-
-/**
- * Laravel - A PHP Framework For Web Artisans
- *
- * @package  Laravel
- * @author   Taylor Otwell <taylor@laravel.com>
- */
-
-define('LARAVEL_START', microtime(true));
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -25,45 +18,68 @@ require __DIR__.'/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
-| Turn On The Lights
+| Check permissions paths and env
 |--------------------------------------------------------------------------
-|
-| We need to illuminate PHP development, so let us turn on the lights.
-| This bootstraps the framework and gets it ready for use, then it
-| will load up this application so that we can run it and send
-| the responses back to the browser and delight our users.
-|
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$run = first_run();
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
+if(!$run->check()) {
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+	/*
+	|--------------------------------------------------------------------------
+	| Show Errors Start
+	|--------------------------------------------------------------------------
+	*/
 
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
+	$run->showErrors();
 
-$response->send();
+} else {
 
-$kernel->terminate($request, $response);
+	/**
+	 * Laravel - A PHP Framework For Web Artisans
+	 *
+	 * @package  Laravel
+	 * @author   Taylor Otwell <taylor@laravel.com>
+	 */
 
-/**
- * Leopardus - Multilanguaje Modular System
- *
- * @package  Leopardus
- * @author   Alejandro Pérez <alejandro@leopardus.net>
- */
+	define('LARAVEL_START', microtime(true));
 
-include __DIR__.'/../app/Kernel/initialize.php';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Turn On The Lights
+	|--------------------------------------------------------------------------
+	|
+	| We need to illuminate PHP development, so let us turn on the lights.
+	| This bootstraps the framework and gets it ready for use, then it
+	| will load up this application so that we can run it and send
+	| the responses back to the browser and delight our users.
+	|
+	*/
+
+	$app = require_once __DIR__.'/../bootstrap/app.php';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Run The Application
+	|--------------------------------------------------------------------------
+	|
+	| Once we have the application, we can handle the incoming request
+	| through the kernel, and send the associated response back to
+	| the client's browser allowing them to enjoy the creative
+	| and wonderful application we have prepared for them.
+	|
+	*/
+
+	$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+	$response = $kernel->handle(
+	    $request = Illuminate\Http\Request::capture()
+	);
+
+	$response->send();
+
+	$kernel->terminate($request, $response);
+
+}

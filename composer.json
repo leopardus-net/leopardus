@@ -46,7 +46,7 @@
             "Modules\\": "modules/"
         },
         "files": [
-            "app/Kernel/helpers.php"
+            "app/Kernel/loader_helpers.php"
         ]
     },
     "autoload-dev": {
