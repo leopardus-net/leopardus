@@ -34,7 +34,7 @@ class CoreMiddleware
                 'name' => 'Leopardus',
                 'slogan' => 'Modular and Multilanguage system.', 
                 'description' => 'Open source, modular and multilanguage system based on Laravel. For the creation of personal or business web tools.',
-                'version' => '0.16.0'
+                'version' => '0.17.1'
             ];
         } else {
             // Obtenemos la configuración del sitio.

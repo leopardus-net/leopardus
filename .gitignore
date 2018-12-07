@@ -3,6 +3,9 @@
 /public/storage
 /storage/*.key
 /vendor
+/resources/lang/*/*-list.php
+/resources/lang/*/*-details.php
+/resources/lang/*/left-sidebar.php
 /.idea
 /.vscode
 /.vagrant
