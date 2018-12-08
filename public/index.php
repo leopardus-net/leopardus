@@ -18,21 +18,9 @@ require __DIR__.'/../vendor/autoload.php';
 | Check permissions paths and env
 |--------------------------------------------------------------------------
 */
-
 $run = first_run();
 
-if(!$run->check()) {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Show Errors Start
-	|--------------------------------------------------------------------------
-	*/
-
-	$run->showErrors();
-
-} else {
-
+if($run->check()) {
 	/**
 	 * Laravel - A PHP Framework For Web Artisans
 	 *
@@ -79,4 +67,6 @@ if(!$run->check()) {
 
 	$kernel->terminate($request, $response);
 
+} else {
+	$run->showErrors();
 }

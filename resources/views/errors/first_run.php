@@ -210,97 +210,107 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height" style="">
-        	<div class="content" style="margin-top: -8em">
-        		<h1>The Leopardus System</h1>
-                <img style="float:left;width: 120px;" src="./assets/images/leopardus-face.png" alt="The Leopardus system">
-            	<div style="float:left;text-align: left;margin-left: 15px;margin-bottom: 15px">
-            		<h3 class="item">
-            			<?php if($this->checkVersionPHP()): ?> 
-	            		<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
-						  <path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
-						  <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
-						  <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
-						</svg>
-						<?php else: ?>
-							<img class="danger-icon" src="./assets/images/danger.png" alt="X">
-						<?php endif; ?>
-	            		<strong>PHP versión check</strong>
-	            		<a href="#" title="Help" class="help-link">?</a>
-	            	</h3>
+        <div class="flex-center position-ref full-height">
+        	<div class="content">
+        		<h1 style="clear:both">Requirements of <img src="./assets/images/logo-text.png" alt="The Leopardus system"></h1>
+				<?php if(count($this->errors)): ?>
+				<div>
+					<ul style="text-align:left">
+						<?php foreach($this->errors as $error): ?>
+							<li><?=$error;?></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<?php endif; ?>
+				<div style="clear:both"></div>
+                <div class="flex-center position-ref">
+					<div style="float:left;text-align: left;margin-left: 15px;margin-bottom: 15px">
+						<h3 class="item">
+							<?php if($this->checkVersionPHP()): ?> 
+							<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
+							<path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+							<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+							</svg>
+							<?php else: ?>
+								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+							<?php endif; ?>
+							<strong>PHP versión check</strong>
+							<a href="#" title="Help" class="help-link">?</a>
+						</h3>
+						<h3 class="item">
+							<?php if($this->checkSettingsPHP()): ?> 
+							<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
+							<path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+							<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+							</svg>
+							<?php else: ?>
+								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+							<?php endif; ?>
 
-	            	<h3 class="item">
-	            		<?php if($this->checkSettingsPHP()): ?> 
-	            		<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
-						  <path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
-						  <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
-						  <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
-						</svg>
-						<?php else: ?>
-							<img class="danger-icon" src="./assets/images/danger.png" alt="X">
-						<?php endif; ?>
+							<strong>PHP settings check</strong>
+							<a href="#" title="Help" class="help-link">?</a>
+						</h3>
+						<h3 class="item">
+							<?php if($this->checkExtensionsPHP()): ?> 
+							<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
+							<path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+							<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+							</svg>
+							<?php else: ?>
+								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+							<?php endif; ?>
 
-	            		<strong>PHP settings check</strong>
-	            		<a href="#" title="Help" class="help-link">?</a>
-	            	</h3>
-	            	<h3 class="item">
-	            		<?php if($this->checkExtensionsPHP()): ?> 
-	            		<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
-						  <path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
-						  <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
-						  <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
-						</svg>
-						<?php else: ?>
-							<img class="danger-icon" src="./assets/images/danger.png" alt="X">
-						<?php endif; ?>
+							<strong>PHP extension check</strong>
+							<a href="#" title="Help" class="help-link">?</a>
+						</h3>
+						<h3 class="item">
+							<?php if($this->checkDirsPermission()): ?> 
+							<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
+							<path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+							<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+							</svg>
+							<?php else: ?>
+								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+							<?php endif; ?>
 
-	            		<strong>PHP extension check</strong>
-	            		<a href="#" title="Help" class="help-link">?</a>
-	            	</h3>
-	            	<h3 class="item">
-	            		<?php if($this->checkFilesPermission()): ?> 
-	            		<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
-						  <path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
-						  <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
-						  <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
-						</svg>
-						<?php else: ?>
-							<img class="danger-icon" src="./assets/images/danger.png" alt="X">
-						<?php endif; ?>
+							<strong>Dirs permission check</strong>
+							<a href="#" title="Help" class="help-link">?</a>
+						</h3>
+						<h3 class="item">
+							<?php if($this->checkFilesPermission()): ?> 
+							<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
+							<path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+							<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+							</svg>
+							<?php else: ?>
+								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+							<?php endif; ?>
 
-	            		<strong>Files permission check</strong>
-	            		<a href="#" title="Help" class="help-link">?</a>
-	            	</h3>
-	            	<h3 class="item">
-	            		<?php if($this->checkDirsPermission()): ?> 
-	            		<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
-						  <path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
-						  <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
-						  <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
-						</svg>
-						<?php else: ?>
-							<img class="danger-icon" src="./assets/images/danger.png" alt="X">
-						<?php endif; ?>
+							<strong>Files permission check</strong>
+							<a href="#" title="Help" class="help-link">?</a>
+						</h3>
+						<h3 class="item">
+							<?php if($this->checkEnvKey()): ?> 
+							<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
+							<path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+							<circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
+							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
+							</svg>
+							<?php else: ?>
+								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+							<?php endif; ?>
+							<strong>Encryption key set</strong>
+							<a href="#" title="Help" class="help-link">?</a>
+						</h3>
+					</div>
+				</div>
 
-	            		<strong>Dirs permission check</strong>
-	            		<a href="#" title="Help" class="help-link">?</a>
-	            	</h3>
-					<h3 class="item">
-            			<?php if($this->checkEnvKey()): ?> 
-	            		<svg class="animated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 70 70" style="position: absolute;top: -3px;">
-						  <path id="successAnimationResult" fill="#D8D8D8" d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
-						  <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2" stroke-linecap="round" fill="transparent"/>
-						  <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
-						</svg>
-						<?php else: ?>
-							<img class="danger-icon" src="./assets/images/danger.png" alt="X">
-						<?php endif; ?>
-	            		<strong>Encryption key set</strong>
-	            		<a href="#" title="Help" class="help-link">?</a>
-	            	</h3>
-            	</div>
-
-            	<div>
+            	<div style="clear: both;">
             		<button onclick="location.reload();">Refresh</button>
             	</div>
             </div>
