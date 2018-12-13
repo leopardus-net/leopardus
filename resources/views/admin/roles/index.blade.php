@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ trans('permissions.title') }}
+    {{ trans('roles.title') }}
 @stop
 
 @section('styles')
@@ -20,18 +20,17 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-5 col-12 align-self-center">
-            <h3 class="text-themecolor">{{ trans('permissions.breadcrumb.title') }}</h3>
+            <h3 class="text-themecolor">{{ trans('roles.breadcrumb.title') }}</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans('breadcrumb.admin') }}</a></li>
-                <li class="breadcrumb-item active">{{ trans('breadcrumb.security') }}</li>
+                <li class="breadcrumb-item active">{{ trans('breadcrumb.system') }}</li>
             </ol>
         </div>
         <div class="col-md-7 col-4 align-self-center">
             <div class="d-flex m-t-10 justify-content-end">
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <button data-toggle="modal" id="newRole" data-target=".bs-example-modal-sm" class=" waves-effect waves-light btn-success btn  pull-right m-l-10"><i class="ti-plus text-white"></i> {{ trans('permissions.new') }}</button>
+                    <button data-toggle="modal" id="newRole" data-target=".bs-example-modal-sm" class=" waves-effect waves-light btn-success btn  pull-right m-l-10"><i class="ti-plus text-white"></i> {{ trans('roles.new') }}</button>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -43,33 +42,32 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                    @foreach($permissions as $group)
                         <table class="table table-striped table-bordered" data-form="deleteForm">
                             <thead>
                                 <tr>
-                                    <th width="40%">{{ trans('permissions-group-list.' . $group->slug) }}</th>
-                                    <th></th>
-                                    <th width="21%" class="text-nowrap"></th>
+                                    <th>{{ trans('roles.table.name') }}</th>
+                                    <th>{{ trans('roles.table.slug') }}</th>
+                                    <th class="text-nowrap">{{ trans('roles.table.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse( $group->permissions as $perm )
+                                @forelse( $roles as $rol )
                                     <tr>
-                                        <td width="40%" class="text-center">{{ trans("permissions-list.$perm->name") }}</td>
-                                        <td>{{ $perm->name }}</td>
-                                        <td width="21%">
+                                        <td>{{ trans("roles-list.$rol->name") }}</td>
+                                        <td>{{ $rol->name }}</td>
+                                        <td class="text-nowrap">
                                             <form class="form-delete text-center" method="POST" style="display: inline-block;margin-right:5px" 
-                                                action="{{ route('permissions.destroy', $perm->id) }}"> 
+                                                action="{{ route('roles.destroy', $rol->id) }}"> 
                                                 @csrf
                                                 @method('delete')
                                                 <a class="btn btn-warning" 
-                                                    href="{{ route('permissions.modify', $perm->id) }}" 
+                                                    href="{{ route('roles.modify', $rol->id) }}" 
                                                     data-toggle="tooltip" 
-                                                    data-original-title="@lang('permissions.update-btn')">
+                                                    data-original-title="@lang('roles.update-btn')">
                                                     <i class="fas fa-pencil-alt text-white"></i>
                                                 </a>
                                                 <button name="delete-modal" data-toggle="tooltip" 
-                                                    data-original-title="@lang('permissions.delete-btn')" 
+                                                    data-original-title="@lang('roles.delete-btn')" 
                                                     class="btn text-white btn-danger"> 
                                                     <i class="fas fa-trash"></i> 
                                                 </button>
@@ -78,12 +76,11 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="2">{{ trans('permissions.empty') }}</td>
+                                        <td colspan="2">{{ trans('roles.empty') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
-                    @endforeach
                     </div>
                 </div>
             </div>
@@ -93,11 +90,19 @@
 
     @include('modals.confirm-delete')
 
-    @include('admin.permissions.modals.new')
+    @include('admin.roles.modals.new')
+
+    @if( isset($update) && $update  )
+        @include('admin.permissions.modals.update')
+    @endif
+
 @stop
 
 @section('scripts')
     <script>
+        @if( isset($update) && $update )
+            $('#updateModal').modal('show')
+        @endif
 
         $('table[data-form="deleteForm"]').on('click', '.form-delete', function(e){
             e.preventDefault();
@@ -131,9 +136,9 @@
             });
         }
 
-        $('#permission-name').bind( "keyup", function() {
+        $('#role-name').bind( "keyup", function() {
             $string = string_to_slug($(this).val(), '-');
-            $('#permission-slug').val($string);
+            $('#role-slug').val($string);
         });
     </script>
 @stop

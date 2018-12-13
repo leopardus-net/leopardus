@@ -10,12 +10,29 @@
             </div>
             <div class="modal-body"> 
                 <form id="role-form" 
-                    action="{{ url('admin/permissions/store') }}"
+                    action="{{ route('permissions.store') }}"
                     method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="role-name" class="control-label">{{ trans('permissions.modal.name') }}</label>
-                        <input type="text" name="name" class="form-control" id="role-name">
+                        <label for="permission-name" class="control-label">{{ trans('permissions.modal.name') }}</label>
+                        <input type="text" name="name" class="form-control" id="permission-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="permission-name" class="control-label">{{ trans('permissions.modal.slug') }}</label>
+                        <input type="text" name="slug" class="form-control" id="permission-slug">
+                    </div>
+                    <div class="form-group">
+                        <label for="permission-group" class="control-label">
+                            @lang('permissions.modal.group')
+                        </label>
+                        <select id="permission-group" name="group" class="form-control">
+                            <option selected>{{ trans('permissions.modal.select-group') }}</option>
+                            @foreach($permissions as $group)
+                                <option value="{{ $group->id }}">
+                                    {{ trans('permissions-group-list.' . $group->slug) }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </form>
                 

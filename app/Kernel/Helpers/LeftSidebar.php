@@ -116,7 +116,7 @@ class LeftSidebar
     	$item = new LeftSidebarItem;
         $item->slug = $slug;
     	$item->sidebar_id = $this->sidebar->id;
-        $item->parent_id = $parent ? $parent->id : 0;
+        $item->parent_id = $parent ? $parent->id : null;
 
         if( array_key_exists('icon', $data) ) {
     	   $item->icon = (string) $data['icon']; 

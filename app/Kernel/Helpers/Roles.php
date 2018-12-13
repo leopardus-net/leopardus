@@ -15,6 +15,11 @@ class Roles
         $this->translations = translations('roles-list');
     }
 
+    public function all()
+    {
+        return Role::all();
+    }
+
     public function get($role = null)
     {
         if(!is_null($role)) {
@@ -31,7 +36,7 @@ class Roles
     }
 
 
-    public function add($data)
+    public function create($data)
     {
         if( is_string( $data['name'] ) ) {
             // 
@@ -64,9 +69,10 @@ class Roles
         }
 
         // Creamos el role 
-        $this->role = new Role;
-        $this->role->name = $slug;
-
+        $this->role = Role::firstOrCreate([
+            'name' => $slug
+        ]);
+        
         if( array_key_exists('route', $data) && !empty($data['route']) ) {
             $this->role->route = $data['route'];
         } else {

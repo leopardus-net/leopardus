@@ -16,17 +16,35 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         /* @group('translations') */
 	    Route::group(['prefix' => 'translations'], function($router) {
 	        /* @start('translations') */
-	        $router->get('view/{groupKey?}', 'TranslationsController@getView')->where('groupKey', '.*');
-            $router->get('/{groupKey?}', 'TranslationsController@index')->where('groupKey', '.*');
-            $router->post('/add/{groupKey}', 'TranslationsController@postAdd')->where('groupKey', '.*');
-            $router->post('/edit/{groupKey}', 'TranslationsController@postEdit')->where('groupKey', '.*');
-            $router->post('/groups/add', 'TranslationsController@postAddGroup');
-            $router->post('/delete/{groupKey}/{translationKey}', 'TranslationsController@postDelete')->where('groupKey', '.*');
-            $router->post('/import', 'TranslationsController@postImport');
-            $router->post('/find', 'TranslationsController@postFind');
+            $router->get('view/{groupKey?}', 'TranslationsController@getView')->where('groupKey', '.*')
+                ->middleware('permission:translations.groups-view');
+
+            $router->get('/{groupKey?}', 'TranslationsController@index')->where('groupKey', '.*')
+                ->middleware('permission:translations.view');
+                
+            $router->post('/groups/add', 'TranslationsController@postAddGroup')
+                ->middleware('permission:translations.groups-store');
+
+            $router->post('/add/{groupKey}', 'TranslationsController@postAdd')->where('groupKey', '.*')
+                ->middleware('permission:translations.keys-store');
+
+            $router->post('/edit/{groupKey}', 'TranslationsController@postEdit')->where('groupKey', '.*')
+                ->middleware('permission:translations.keys-update');
+
+            $router->post('/delete/{groupKey}/{translationKey}', 'TranslationsController@postDelete')->where('groupKey', '.*')
+                ->middleware('permission:translations.keys-store');
+
+            $router->post('/import', 'TranslationsController@postImport')
+                ->middleware('permission:translations.import');
+
+            $router->post('/find', 'TranslationsController@postFind')
+                ->middleware('permission:translations.import');
+            
             $router->post('/locales/add', 'TranslationsController@postAddLocale');
             $router->post('/locales/remove', 'TranslationsController@postRemoveLocale');
-            $router->post('/publish/{groupKey}', 'TranslationsController@postPublish')->where('groupKey', '.*');
+            
+            $router->post('/publish/{groupKey}', 'TranslationsController@postPublish')->where('groupKey', '.*')
+                ->middleware('permission:translations.publish');
 	    });
 	    
     });

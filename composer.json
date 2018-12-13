@@ -3,7 +3,7 @@
     "description": "Open source, modular and multilanguage system based on Laravel. For the creation of personal or business web tools.",
     "keywords": ["framework", "laravel", "cms", "erp", "blog", "ecommerce"],
     "license": "MIT",
-    "language": "PHP",
+    "homepage": "https://www.leopardus.net",
     "type": "project",
     "authors": [
         {

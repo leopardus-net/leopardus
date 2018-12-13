@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
 
         <title>The Leopardus system</title>
 
@@ -212,7 +212,7 @@
     <body>
         <div class="flex-center position-ref full-height">
         	<div class="content">
-        		<h1 style="clear:both">Requirements of <img src="./assets/images/logo-text.png" alt="The Leopardus system"></h1>
+        		<h1 style="clear:both">Requirements of <img src="/assets/images/logo-text.png" alt="The Leopardus system"></h1>
 				<?php if(count($this->errors)): ?>
 				<div>
 					<ul style="text-align:left">
@@ -233,7 +233,7 @@
 							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
 							</svg>
 							<?php else: ?>
-								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+								<img class="danger-icon" src="/assets/images/danger.png" alt="X">
 							<?php endif; ?>
 							<strong>PHP versión check</strong>
 							<a href="#" title="Help" class="help-link">?</a>
@@ -246,7 +246,7 @@
 							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
 							</svg>
 							<?php else: ?>
-								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+								<img class="danger-icon" src="/assets/images/danger.png" alt="X">
 							<?php endif; ?>
 
 							<strong>PHP settings check</strong>
@@ -260,7 +260,7 @@
 							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
 							</svg>
 							<?php else: ?>
-								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+								<img class="danger-icon" src="/assets/images/danger.png" alt="X">
 							<?php endif; ?>
 
 							<strong>PHP extension check</strong>
@@ -274,7 +274,7 @@
 							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
 							</svg>
 							<?php else: ?>
-								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+								<img class="danger-icon" src="/assets/images/danger.png" alt="X">
 							<?php endif; ?>
 
 							<strong>Dirs permission check</strong>
@@ -288,7 +288,7 @@
 							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
 							</svg>
 							<?php else: ?>
-								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+								<img class="danger-icon" src="/assets/images/danger.png" alt="X">
 							<?php endif; ?>
 
 							<strong>Files permission check</strong>
@@ -302,7 +302,7 @@
 							<polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27" fill="transparent"/>
 							</svg>
 							<?php else: ?>
-								<img class="danger-icon" src="./assets/images/danger.png" alt="X">
+								<img class="danger-icon" src="/assets/images/danger.png" alt="X">
 							<?php endif; ?>
 							<strong>Encryption key set</strong>
 							<a href="#" title="Help" class="help-link">?</a>

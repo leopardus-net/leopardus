@@ -10,7 +10,7 @@ class LeftSidebar extends Model
 
     public function items()
     {
-    	return $this->hasMany(LeftSidebarItem::class, 'sidebar_id')->where('parent_id', 0);
+    	return $this->hasMany(LeftSidebarItem::class, 'sidebar_id')->where('parent_id', null);
     }
 
     public function permissions()

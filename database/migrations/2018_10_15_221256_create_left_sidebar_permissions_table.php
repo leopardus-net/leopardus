@@ -14,9 +14,21 @@ class CreateLeftSidebarPermissionsTable extends Migration
     public function up()
     {
         Schema::create('left_sidebar_permissions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('sidebar_id');
-            $table->integer('permission_id');
+            $table->integer('sidebar_id')->unsigned();
+            
+            $table->foreign('sidebar_id')
+                 ->references('id')->on('left_sidebars')
+                 ->onDelete('cascade');
+
+            $table->integer('permission_id')->unsigned();
+
+            $permissionTable = config('permission.table_names')['permissions'];
+            $table->foreign('permission_id')
+                 ->references('id')->on($permissionTable)
+                 ->onDelete('cascade');
+                 
             $table->timestamps();
         });
     }

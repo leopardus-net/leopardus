@@ -197,8 +197,8 @@
 @section('scripts')
     <!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
 
-    <link href="{{ asset('assets/plugins/bootstrap4-editable/css/bootstrap-editable.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('assets/plugins/bootstrap4-editable/js/bootstrap-editable.min.js') }}"></script>
+    <link href="{{ asset('assets/vendor/bootstrap4-editable/css/bootstrap-editable.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('assets/vendor/bootstrap4-editable/js/bootstrap-editable.min.js') }}"></script>
     
     <script>
 

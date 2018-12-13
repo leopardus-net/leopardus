@@ -98,11 +98,19 @@ class LeftSidebarSeeder extends Seeder
                         'icon' => 'ti-lock',
                         'route' => 'admin/permissions',
 		                'items' =>   [
+							[
+								'name' => [
+								  'es' => 'Roles',
+								  'en' => 'Roles',
+								  'pt' => 'Função'
+								],
+								'route' => 'admin/roles'
+							],
 		                  	[
 		                  		'name' => [
-									'es' => 'Roles y permisos',
-									'en' => 'Functions and permissions',
-		                            'pt' => 'Funções e autorizações'
+									'es' => 'Permisos',
+									'en' => 'Permissions',
+		                            'pt' => 'Autorizações'
 								],
 		                        'route' => 'admin/permissions'
 		                    ],

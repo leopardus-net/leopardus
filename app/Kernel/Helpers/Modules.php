@@ -2,6 +2,8 @@
 
 namespace App\Kernel\Helpers;
 
+use Illuminate\Support\Facades\Cache;
+
 class Modules 
 {
 	protected $module;
@@ -106,7 +108,7 @@ class Modules
 
 	public function publish($force = false)
 	{
-		if(!$this->isPublished || $force) {
+		if(!$this->isPublished && !cache('mPublish[' . $this->module->name . ']') || $force) {
 			// Establecemos el tiempo de respuesta max
 			set_time_limit(600);
 
@@ -114,6 +116,8 @@ class Modules
 			\Artisan::call("module:publish", [
 				'module' => $this->module->name
 			]);
+
+			Cache::rememberForever('mPublish[' . $this->module->name . ']', 1);
 
 			$this->isPublished = true;
 		}

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLeftSidebarsTable extends Migration
+class CreatePermissionGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,19 @@ class CreateLeftSidebarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('left_sidebars', function (Blueprint $table) {
+        Schema::create('permission_groups', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug');
-            $table->integer('order')->default(0);
             $table->timestamps();
+        });
+
+        Schema::table(config('permission.table_names')['permissions'], function (Blueprint $table) {
+            $table->integer('group')->nullable()->unsigned();
+
+            $table->foreign('group')
+                 ->references('id')->on('permission_groups')
+                 ->onDelete('set null');
         });
     }
 
@@ -29,6 +36,6 @@ class CreateLeftSidebarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('left_sidebars');
+        Schema::dropIfExists('permission_groups');
     }
 }
