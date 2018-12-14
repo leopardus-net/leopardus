@@ -55,22 +55,22 @@ class LeftSidebarSeeder extends Seeder
         						],
         						'route' => 'admin/settings/basic'
         					],
-                            [
-                                'name' => [
-        							'es' => 'Menú Lateral',
-        							'en' => 'Left Sidebar',
-                                    'pt' => 'Menu Lateral'
-        						],
-                                'route' => 'admin/settings/left-sidebar'
-                            ],
-                            [
-                                'name' => [
-        							'es' => 'Cabecera',
-        							'en' => 'Header',
-                                    'pt' => 'Cabeçalho'
-        						],
-                                'route' => 'admin/settings/header'
-                            ],
+                            // [
+                            //     'name' => [
+        					// 		'es' => 'Menú Lateral',
+        					// 		'en' => 'Left Sidebar',
+                            //         'pt' => 'Menu Lateral'
+        					// 	],
+                            //     'route' => 'admin/settings/left-sidebar'
+                            // ],
+                            // [
+                            //     'name' => [
+        					// 		'es' => 'Cabecera',
+        					// 		'en' => 'Header',
+                            //         'pt' => 'Cabeçalho'
+        					// 	],
+                            //     'route' => 'admin/settings/header'
+                            // ],
                             [
                                 'name' => [
         							'es' => 'Idiomás',
