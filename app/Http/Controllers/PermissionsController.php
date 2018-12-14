@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 use Spatie\Permission\Models\Role;
 
@@ -24,7 +25,10 @@ class PermissionsController extends Controller
         # validaciones.
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
-            'slug' => 'required|unique:permissions,name',
+            'slug' => [
+                'required',
+                Rule::unique((new \App\Permission)->getTable(), 'name')
+            ],
         ]);
 
         if ($validator->fails()) {
@@ -45,20 +49,46 @@ class PermissionsController extends Controller
 
     public function modify(Request $request, $id)
     {
-        # validaciones.
-        
-        # update.
+        $groups = PermissionGroup::with('permissions')->get();
+        $permission = Permission::findOrFail($id);
 
         # return.
+    	return view('admin.permissions.update', compact('groups', 'permission'));
     }
 
     public function update(Request $request, $id)
     {
+        $permission = Permission::findOrFail($id);
+
         # validaciones.
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => [
+                'required',
+                Rule::unique((new \App\Permission)->getTable(), 'name')
+                    ->ignore($permission->name, 'name')
+                    ->ignore($permission->id)
+            ],
+            'group' => 'required'
+        ]);
 
-        # update.
+        if ($validator->fails()) {
+            return redirect()
+                        ->route('permissions.index')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
-        # return.
+        # store
+        permissions($permission->id)
+            ->group($request->group)
+            ->update([
+                'name' => $request->name, 
+                'slug' => $request->slug
+            ]);
+
+        # return
+        return redirect()->route('permissions.index')->with('action', 'updated');
     }
 
     public function destroy(Request $request, $id)

@@ -23,7 +23,7 @@
             <h3 class="text-themecolor">{{ trans('roles.breadcrumb.title') }}</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans('breadcrumb.admin') }}</a></li>
-                <li class="breadcrumb-item active">{{ trans('breadcrumb.system') }}</li>
+                <li class="breadcrumb-item active">{{ trans('breadcrumb.security') }}</li>
             </ol>
         </div>
         <div class="col-md-7 col-4 align-self-center">
@@ -39,6 +39,22 @@
     <!-- ============================================================== -->
     <div class="row">
         <div class="col-sm-12">
+            @if($errors->any())
+              <div class="alert alert-danger">
+                  <ul class="no-margin" style="margin: 0">
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              <br>
+            @endif
+
+            @if(session('action'))
+                <div class="alert alert-success">
+                    {{ trans('roles.alerts.' . session('action')) }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -60,18 +76,19 @@
                                                 action="{{ route('roles.destroy', $rol->id) }}"> 
                                                 @csrf
                                                 @method('delete')
-                                                <a class="btn btn-warning" 
-                                                    href="{{ route('roles.modify', $rol->id) }}" 
-                                                    data-toggle="tooltip" 
-                                                    data-original-title="@lang('roles.update-btn')">
-                                                    <i class="fas fa-pencil-alt text-white"></i>
-                                                </a>
-                                                <button name="delete-modal" data-toggle="tooltip" 
+                                                <button @if($rol->id <= 2) disabled @endif name="delete-modal" data-toggle="tooltip" 
                                                     data-original-title="@lang('roles.delete-btn')" 
                                                     class="btn text-white btn-danger"> 
                                                     <i class="fas fa-trash"></i> 
                                                 </button>
                                             </form>  
+
+                                            <a class="btn btn-warning" 
+                                                href="{{ route('roles.modify', $rol->id) }}" 
+                                                data-toggle="tooltip" 
+                                                data-original-title="@lang('roles.update-btn')">
+                                                <i class="fas fa-pencil-alt text-white"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty

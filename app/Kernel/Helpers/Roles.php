@@ -23,24 +23,30 @@ class Roles
     public function get($role = null)
     {
         if(!is_null($role)) {
+
             if( is_string($role) ) {
                 // Obtenemos el rol por el nombre.
                 $this->role = Role::where('name', str_slug($role, '-'))->firstOrFail();
-            } elseif( is_integer($role) ) {
+            }
+
+            if( is_integer($role) ) {
                 // Obtenemos el rol por el ID.
                 $this->role = Role::findOrFail($role);
-            } else {
-                return "Error: the parameter is not of type integer or string";
+            }
+
+            if($role instanceof Role) {
+                $this->role = $role;
             }
         }
+
+        return $this;
     }
 
-
-    public function create($data)
+    protected function generate_slug(Array $data)
     {
-        if( is_string( $data['name'] ) ) {
+        if( is_string($data['name']) ) {
             // 
-            if( array_key_exists('slug', $data) && !empty($data['slug']) ) {
+            if( array_key_exists('slug', $data) && $data['slug'] ) {
                 $slug = $data['slug'];
             } else {
                 $slug = str_slug($data['name'], '-'); 
@@ -51,11 +57,13 @@ class Roles
                 // Creamos una nueva traducción
                 $this->translations->add($slug, $data['name'], $locale);
             }
-        } elseif(is_array($data['name'])) {
+        }
+        
+        if( is_array($data['name']) ) {
             //
             $arrays = collect($data['name']);
 
-            if( array_key_exists('slug', $data) && !empty($data['slug']) ) {
+            if( array_key_exists('slug', $data) && $data['slug'] ) {
                 $slug = $data['slug'];
             } else {
                 $slug = str_slug($arrays->first(), '-'); 
@@ -64,9 +72,29 @@ class Roles
             foreach ($arrays as $locale => $value) {
                 $this->translations->add($slug, $value, $locale);
             }
-        } else {
-            return "Error: the parameter :name: is not of type array or string";
-        }
+        } 
+
+        return isset($slug) ? $slug : false;
+    }
+
+    public function update(Array $data)
+    {
+        $slug = $this->generate_slug($data);
+
+        $this->role->name = $slug;
+        $this->role->route = $data['route'];
+        $this->role->save();
+
+        // Exportamos la traducciín a la carpeta LANG
+        $this->translations->publish();
+
+        return $this->role;
+    }
+
+
+    public function create(Array $data)
+    {
+        $slug = $this->generate_slug($data);
 
         // Creamos el role 
         $this->role = Role::firstOrCreate([

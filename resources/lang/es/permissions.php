@@ -25,5 +25,14 @@ return array (
     'slug' => 'Slug',
     'group' => 'Grupo de permisos',
     'select-group' => 'Selecciona el grupo de permiso'
-  )
+  ),
+  'update' => [
+    'title' => 'Modificación de permiso'
+  ],
+  'back' => 'Volver',
+  'alerts' => [
+    'created' => 'Permiso creado exitosamente',
+    'updated' => 'Permiso modificado exitosamente',
+    'deleted' => 'Permiso eliminado exitosamente'
+  ]
 );

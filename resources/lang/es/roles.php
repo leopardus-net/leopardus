@@ -20,5 +20,14 @@ return [
     ],
     'update-btn' => 'Modifiar',
     'delete-btn' => 'Eliminar',
-    'assing-btn' => 'Asignar Permisos'
+    'assing-btn' => 'Asignar Permisos',
+    'update' => [
+        'title' => 'Modificación de rol'
+      ],
+      'back' => 'Volver',
+      'alerts' => [
+        'created' => 'Rol creado exitosamente',
+        'updated' => 'Rol modificado exitosamente',
+        'deleted' => 'Rol eliminado exitosamente'
+      ]
 ];

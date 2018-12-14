@@ -46,14 +46,14 @@ class Permissions
         return $this;
     }
 
-    private function slug_generator(Array $data)
+    protected function slug_generator(Array $data): String
     {
         $slug = ($this->group) ? $this->group->slug.'.' : '';
 
         if(is_string($data['name'])) {
             // 
-            if( array_key_exists('slug', $data) && !empty($data['slug']) ) {
-	        	$slug .= $data['slug'];
+            if( array_key_exists('slug', $data) && $data['slug'] ) {
+	        	$slug = $data['slug'];
 	    	} else {
             	$slug .= str_slug($data['name'], '-'); 
 	    	}
@@ -63,7 +63,9 @@ class Permissions
                 // Creamos una nueva traducción
                 $this->translations->add($slug, $data['name'], $locale);
             }
-        }elseif(is_array($data['name'])) {
+        }
+        
+        if(is_array($data['name'])) {
             //
             $arrays = collect($data['name']);
 
@@ -152,6 +154,24 @@ class Permissions
         $this->translations->publish();
 
         return $this;
+    }
+
+    public function update(Array $data)
+    {
+        // slug
+        $slug = $this->slug_generator($data);
+
+        // make permission
+        $this->permission = Permission::firstOrCreate([
+            'name' => $slug,
+            'group' => $this->group->id
+        ]);
+
+        // Exportamos la traducciín a la carpeta lang
+        $this->translations->publish();
+
+        return $this->permission;
+        
     }
 
     public function make(Array $array)

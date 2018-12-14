@@ -40,6 +40,22 @@
     <!-- ============================================================== -->
     <div class="row">
         <div class="col-sm-12">
+            @if($errors->any())
+              <div class="alert alert-danger">
+                  <ul class="no-margin" style="margin: 0">
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              <br>
+            @endif
+
+            @if(session('action'))
+                <div class="alert alert-success">
+                    {{ trans('permissions.alerts.' . session('action')) }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -62,18 +78,18 @@
                                                 action="{{ route('permissions.destroy', $perm->id) }}"> 
                                                 @csrf
                                                 @method('delete')
-                                                <a class="btn btn-warning" 
-                                                    href="{{ route('permissions.modify', $perm->id) }}" 
-                                                    data-toggle="tooltip" 
-                                                    data-original-title="@lang('permissions.update-btn')">
-                                                    <i class="fas fa-pencil-alt text-white"></i>
-                                                </a>
                                                 <button name="delete-modal" data-toggle="tooltip" 
                                                     data-original-title="@lang('permissions.delete-btn')" 
                                                     class="btn text-white btn-danger"> 
                                                     <i class="fas fa-trash"></i> 
                                                 </button>
                                             </form>  
+                                            <a class="btn btn-warning" 
+                                                href="{{ route('permissions.modify', $perm->id) }}" 
+                                                data-toggle="tooltip" 
+                                                data-original-title="@lang('permissions.update-btn')">
+                                                <i class="fas fa-pencil-alt text-white"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty
