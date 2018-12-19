@@ -117,7 +117,9 @@ class Modules
 				'module' => $this->module->name
 			]);
 
-			Cache::rememberForever('mPublish[' . $this->module->name . ']', 1);
+			Cache::rememberForever('mPublish[' . $this->module->name . ']', function(){
+				return true;
+			});
 
 			$this->isPublished = true;
 		}

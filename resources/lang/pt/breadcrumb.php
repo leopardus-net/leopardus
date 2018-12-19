@@ -9,5 +9,7 @@ return array (
   'languajes' => 'Idiomás',
   'system' => 'Sistema',
   'permissions' => 'Permisos',
-  'roles' => 'Roles'
+  'roles' => 'Roles',
+  'users' => 'Usuarios',
+
 );

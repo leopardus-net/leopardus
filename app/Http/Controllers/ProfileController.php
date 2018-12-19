@@ -3,10 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 use App\ProfileTab;
+use App\Profile;
+use App\User;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        // Pagina para el menú
+        $page = route('profile');
+
+        // Compartimos la variable
+        view()->share(compact('page'));
+    }
+
     //
     public function index(Request $request)
     {
@@ -65,7 +78,7 @@ class ProfileController extends Controller
             }
         };
 
-        return view('profile.settings', compact('user', 'profile', 'tabs', 'tabSelected'));
+        return view('profile.settings.index', compact('user', 'profile', 'tabs', 'tabSelected'));
     }
 
     public function uploadProfileImage(Request $request)
@@ -79,9 +92,9 @@ class ProfileController extends Controller
            return response()->json($validator->errors());
         }
 
-        // Obtenemos el profile.
+        // Obtenemos el usuario.
         $user = auth()->user();
-
+        
         // Obtenemos el archivo.
         $file = $request->file('avatar');
 
@@ -94,7 +107,7 @@ class ProfileController extends Controller
         $path_storage = storage_path('app/public/avatars/' . $user->id);
 
         if( !file_exists($path_storage) ) {
-            \Storage::disk('public')->makeDirectory($path);
+            \Storage::disk('public')->makeDirectory('avatars/' . $user->id, '0775');
         }
 
         if( $width < 250 && $height < 250 ) {
@@ -135,5 +148,84 @@ class ProfileController extends Controller
             'error' => false,
             'image' => url($route . '_250.jpg')
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        // Validaciones.
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+            'birthday' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                     ->withErrors($validator->errors());
+        }
+
+        $user = auth()->user();
+        $user->name = $request->name;
+        $user->save();
+
+        $profile = Profile::firstOrCreate([
+            'user_id' => $user->id
+        ]);
+
+        $profile->biography = $request->biography;
+        $profile->phone = $request->phone;
+        $profile->birthday = $request->birthday;
+        $profile->country = $request->country;
+        $profile->province = $request->province;
+        $profile->city = $request->city;
+        $profile->address = $request->address;
+        $profile->postal_code = $request->postal_code;
+        $profile->save();
+
+        return redirect()->route('profile')->with('action', 'updated');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        // Validaciones.
+        $validator = \Validator::make($request->all(), [
+            'old' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        if ($validator->fails()) {
+           return redirect()->back()
+                    ->withErrors($validator->errors());
+        }
+
+        $user = auth()->user();
+
+        # comprobamos que sea el password anterior
+        if (\Auth::attempt(['email' => $user->email, 'password' => $request->old])) {
+            // 
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+
+            return redirect()->route('profile')
+                    ->with('action', 'updated-pass');
+                    
+        } else {
+            return redirect()->back()
+                    ->with('error', 'account.security.errors.password-fail');
+        }     
+
+    }
+
+    public function settingsInformationTab(Request $request) {
+        $user = auth()->user();
+    	$profile = $user->profile;
+    	
+    	return view('profile.settings.tab-information', compact('user','profile'));
+    }
+
+    public function settingsSecurityTab(Request $request) {
+        $user = auth()->user();
+    	$profile = $user->profile;
+    	
+    	return view('profile.settings.tab-security', compact('user','profile'));
     }
 }

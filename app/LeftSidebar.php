@@ -2,19 +2,20 @@
 
 namespace App;
 
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 
 class LeftSidebar extends Model
 {
-    //
+    use HasRoles;
 
-    public function items()
-    {
-    	return $this->hasMany(LeftSidebarItem::class, 'sidebar_id')->where('parent_id', null);
-    }
+    protected $guard_name = 'web';
 
-    public function permissions()
+    public function getItemsByPermissions($permissions)
     {
-    	return $this->belongsToMany(Spatie\Permission\Models\Permission::class, 'left_sidebar_permissions', 'sidebar_id', 'permission_id');
+        return LeftSidebarItem::where('sidebar_id', $this->id)
+                    ->where('parent_id', null)
+                    ->permission($permissions)
+                    ->get();
     }
 }

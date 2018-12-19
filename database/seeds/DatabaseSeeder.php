@@ -4,6 +4,12 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    protected $seeders = [
+        LanguajesSeeder::class,
+        PermissionsRolesSeeder::class,
+        LeftSidebarSeeder::class
+    ];
+
     /**
      * Seed the application's database.
      *
@@ -11,10 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        $this->call(LanguajesSeeder::class);
-        $this->call(LeftSidebarSeeder::class);
-        $this->call(PermissionsRolesSeeder::class);
-        
+        $this->call($this->seeders);
     }
 }

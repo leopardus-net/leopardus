@@ -9,16 +9,19 @@
     <div class="col-md-5 col-8 align-self-center">
         <h3 class="text-themecolor m-b-0 m-t-0">{{ $user->name }}</h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">@lang('profile.breadcrumb')</a></li>
-            <li class="breadcrumb-item active">{{ $user->name }}</li>
+            <li class="breadcrumb-item "><a href="javascript:void(0)">{{ trans('breadcrumb.admin') }}</a></li>
+            <li class="breadcrumb-item active">{{ trans('breadcrumb.system') }}</li>
+            <li class="breadcrumb-item active">{{ trans('breadcrumb.users') }}</li>
         </ol>
     </div>
     <div class="col-md-7 col-4 align-self-center">
         <div class="d-flex m-t-10 justify-content-end">
             <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                <a href="{{ route('profile.settings') }}" class="waves-effect waves-light btn-outline-success btn-rounded btn pull-right m-l-10">
+				@if($member->can('users.update'))
+                <a href="{{ route('admin.user-settings', $user->id) }}" class="waves-effect waves-light btn-outline-success btn-rounded btn pull-right m-l-10">
                 	<i class="ti-settings"></i> @lang('profile.settings')
                 </a>
+				@endif
             </div>
         </div>
     </div>
@@ -31,7 +34,7 @@
 <!-- ============================================================== -->
 <!-- Row -->
 <div class="row">
-	@if(session('action'))
+	@if($errors->any() || session('action') || session('error'))
 		<div class="col-12">
 			@if(session('action'))
 				<div class="alert alert-success">
@@ -73,7 +76,7 @@
 	            	@foreach($tabs as $item)
 		                <li class="nav-item"> 
 		                	<a class="nav-link tab-link" 
-		                		data-url="{{ route($item->route) }}"  href="#{{ $item->slug }}" role="tab">
+		                		data-url="{{ route('admin.'.$item->route, $user->id) }}"  href="#{{ $item->slug }}" role="tab">
 		                		@lang('profile-tabs-list.' . $item->slug)
 		                	</a> 
 		                </li>
@@ -100,7 +103,7 @@
 <script>
 	@if($tab = $tabSelected())
 		$('#{{$tab->slug}}')
-			.load("{{ route($tab->route) }}", function() {
+			.load("{{ route('admin.'.$tab->route, $user->id) }}", function() {
 				$('#spinner').hide();
 			});
 

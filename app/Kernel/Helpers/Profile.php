@@ -69,7 +69,7 @@ class Profile
                 // Creamos la tab
                 $tab = new ProfileTab;
                 $tab->slug = $slug;
-                $tab->url = $data['url'];
+                $tab->route = $data['route'];
                 $tab->type = "settings";
 
                 if( array_key_exists('order', $data) && !empty($data['order']) ) {
@@ -104,7 +104,7 @@ class Profile
                 // Creamos la tab
                 $tab = new ProfileTab;
                 $tab->slug = $slug;
-                $tab->url = $data['url'];
+                $tab->route = $data['route'];
                 $tab->type = "profile";
 
                 if( array_key_exists('order', $data) && !empty($data['order']) ) {

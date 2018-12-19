@@ -13,6 +13,16 @@ use App\PermissionGroup;
 
 class PermissionsController extends Controller
 {
+    public function __construct()
+    {
+        // Pagina para el menú
+        $page = route('permissions.index');
+
+        // Compartimos la variable
+        view()->share(compact('page'));
+    }
+
+
     public function index()
     {
         $permissions = PermissionGroup::with('permissions')->get();

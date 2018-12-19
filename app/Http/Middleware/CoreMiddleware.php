@@ -37,13 +37,24 @@ class CoreMiddleware
                 'version' => '0.18.0'
             ];
         } else {
+            
             // Obtenemos la configuración del sitio.
             $settings = Setting::first();
             $languajes = Languaje::all();
-            $leftSidebar = LeftSidebar::orderBy('order', 'asc')->get();
-            $headerProfileItems = ProfileHeaderItem::orderBy('order', 'asc')->get();
 
-            view()->share( compact('leftSidebar', 'languajes', 'headerProfileItems') );
+            if(auth()->check()) {
+                $member = auth()->user();
+                $leftSidebar = LeftSidebar::orderBy('order', 'asc')
+                                ->permission($member->getAllPermissions())->get();
+
+                //dd($leftSidebar);
+
+                $headerProfileItems = ProfileHeaderItem::orderBy('order', 'asc')->get();
+                
+                view()->share(compact('leftSidebar', 'headerProfileItems', 'member'));
+            }
+                
+            view()->share(compact('languajes'));
         }
 
         view()->share(compact('settings', 'isInstalled'));

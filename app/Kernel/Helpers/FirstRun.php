@@ -56,6 +56,7 @@ class FirstRun
 			['path' => '/resources/lang', 'recursive' => true],
 			['path' => '/storage', 'recursive' => true],
 			['path' => '/public', 'recursive' => false],
+			['path' => '/public/modules', 'recursive' => false],
 			['path' => '/bootstrap/cache', 'recursive' => true]
 		];
 

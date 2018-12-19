@@ -6,5 +6,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         ->middleware('permission:dashboard.view');
         
     Route::get('/dashboard', 'DashboardController@index')
-        ->middleware('permission:dashboard.view');
+        ->middleware('permission:dashboard.view')
+        ->name('dashboard.index');
 });

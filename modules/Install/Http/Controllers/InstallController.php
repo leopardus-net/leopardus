@@ -177,7 +177,7 @@ class InstallController extends Controller
                             'en' => 'Basic Information',
                             'pt' => 'Informação básica'
                         ],
-                        'url' => '/profile/information-tab'
+                        'route' => 'profile.tab.info'
                     ]);
 
                     // Creamos la tab "información" en la configuración del perfil 
@@ -187,7 +187,7 @@ class InstallController extends Controller
                             'en' => 'Basic Information',
                             'pt' => 'Informação básica'
                         ],
-                        'url' => '/profile/settings/information-tab'
+                        'route' => 'profile.settings.tab.info'
                     ]);
 
                     profile()->settings()->makeTab([
@@ -196,7 +196,7 @@ class InstallController extends Controller
                             'en' => 'Security',
                             'pt' => 'Segurança'
                         ],
-                        'url' => '/profile/settings/security-tab'
+                        'route' => 'profile.settings.tab.security'
                     ]);
 
                     // Autenticamos al usuario

@@ -80,7 +80,11 @@ class LeftSidebar
             $sidebar->order = (int) $data['order'];
         }
 
-    	$sidebar->save();
+        $sidebar->save();
+        
+        if( array_key_exists('permissions', $data) && is_array($data['permissions']) && count($data['permissions']) ) {
+            $sidebar->givePermissionTo($data['permissions']);
+        }
 
         $this->sidebar = $sidebar;
 
@@ -130,7 +134,11 @@ class LeftSidebar
     		$item->route = (string) $data['route'];
     	}
 
-    	$item->save();
+        $item->save();
+        
+        if( array_key_exists('permissions', $data) && is_array($data['permissions']) && count($data['permissions']) ) {
+            $item->givePermissionTo($data['permissions']);
+        }
     	
     	// key
     	$key = $this->sidebar->slug;

@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="row page-titles">
-    <div class="col-md-5 col-8 align-self-center">
+    <div class="col-12 align-self-center">
         <h3 class="text-themecolor m-b-0 m-t-0">@lang('profile-settings.title')</h3>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">@lang('profile.breadcrumb')</a></li>
@@ -14,14 +14,28 @@
         </ol>
     </div>
 </div>
-<!-- ============================================================== -->
-<!-- End Bread crumb and right sidebar toggle -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Start Page Content -->
-<!-- ============================================================== -->
 <!-- Row -->
 <div class="row">
+	@if($errors->any() || session('error'))
+		<div class="col-12">
+			@if($errors->any())
+				<div class="alert alert-danger">
+					<ul class="no-margin" style="margin: 0">
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+				<br>
+			@endif
+
+			@if(session('error'))
+				<div class="alert alert-danger">
+					{{ trans(session('error')) }}
+				</div>
+			@endif
+		</div>
+	@endif
     <!-- Column -->
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
@@ -52,7 +66,7 @@
 	            	@foreach($tabs as $item)
 		                <li class="nav-item"> 
 		                	<a class="nav-link tab-link" 
-		                		data-url="{{ url($item->url) }}"  href="#{{ $item->slug }}" role="tab">
+		                		data-url="{{ route($item->route) }}"  href="#{{ $item->slug }}" role="tab">
 		                		@lang('profile-settings-tabs-list.' . $item->slug)
 		                	</a> 
 		                </li>
@@ -71,7 +85,6 @@
 	        </div>
 	    </div>
     @endif
-   
     <!-- End tabs -->
 </div>
 @stop
@@ -106,6 +119,37 @@
 	    $("#imageUploadForm .upload").on("change", function() {
 	        $("#imageUploadForm").submit();
 	    });
+	});
+
+	@if($tab = $tabSelected())
+		$('#{{$tab->slug}}')
+			.load("{{ route($tab->route) }}", function() {
+				$('#spinner').hide();
+			});
+
+		$('a[href="#{{$tab->slug}}"]').tab('show');
+	@endif
+
+	$('#tabs').on('click','.tablink,#profile-tab a',function (e) {
+	    e.preventDefault();
+	    let url = $(this).attr("data-url");
+
+	    if( $(this.hash).html().length <= 0 ) {
+        	$('#spinner').show();
+        }
+
+	    if (typeof url !== "undefined") {
+	        let pane = $(this), href = this.hash;
+	        // Mostramos el tab.
+    		pane.tab('show');
+	        // ajax load from data-url
+	        $(href).load(url,function(result){      
+	            $('#spinner').hide();
+	        });
+	    } else {
+	        $(this).tab('show');
+	        $('#spinner').hide();
+	    }
 	});
 </script>
 @stop

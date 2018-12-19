@@ -11,6 +11,15 @@ use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
+    public function __construct()
+    {
+        // Pagina para el menú
+        $page = route('roles.index');
+
+        // Compartimos la variable
+        view()->share(compact('page'));
+    }
+
     public function index()
     {
         $roles = roles()->all();

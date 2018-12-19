@@ -126,6 +126,7 @@
                                     <td>{{ $user->created_at }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" onclick="$('#deleteform{{$user->id}}').click();" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                                        <a href="{{ route('admin.user-settings', $user->id) }}" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" onclick="$('#deleteform{{$user->id}}').click();" data-toggle="tooltip" data-original-title="Settings"><i class="ti-settings" aria-hidden="true"></i></a>
                                         <form  method="POST" action="{{ route('users.destroy', $user->id )}}"><button id="deleteform{{$user->id}}" type="submit" hidden="hidden"></button>
 		                                @csrf</form>
                                     </td>
