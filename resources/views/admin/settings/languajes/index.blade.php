@@ -80,7 +80,7 @@
                                             action="{{ route('languajes.destroy', $languaje->id) }}"> 
                                             @csrf
                                             @method('delete')
-                                            <button @if( $languaje->id <= 2 ) disabled @endif
+                                            <button @if( $languaje->id <= 3 ) disabled @endif
                                                 name="delete-modal" data-toggle="tooltip" 
                                                 data-original-title="@lang('languajes.delete-btn')" 
                                                 class="btn text-white btn-danger"> 

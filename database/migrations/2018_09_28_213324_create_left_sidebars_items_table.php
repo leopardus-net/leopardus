@@ -14,12 +14,24 @@ class CreateLeftSidebarsItemsTable extends Migration
     public function up()
     {
         Schema::create('left_sidebars_items', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug');
             $table->string('icon')->nullable();
             $table->string('route')->nullable();
-            $table->integer('parent_id')->default(0);
-            $table->integer('sidebar_id');
+            $table->integer('parent_id')->nullable()->unsigned();
+
+            $table->foreign('parent_id')
+                    ->references('id')
+                    ->on('left_sidebars_items')
+                    ->onDelete('cascade');
+
+            $table->integer('sidebar_id')->unsigned();
+            $table->foreign('sidebar_id')
+                    ->references('id')
+                    ->on('left_sidebars')
+                    ->onDelete('cascade');
+
             $table->integer('order')->default(0);
             $table->timestamps();
         });

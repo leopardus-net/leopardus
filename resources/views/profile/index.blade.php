@@ -31,6 +31,15 @@
 <!-- ============================================================== -->
 <!-- Row -->
 <div class="row">
+	@if(session('action'))
+		<div class="col-12">
+			@if(session('action'))
+				<div class="alert alert-success">
+					{{ trans('account.alerts.' . session('action')) }}
+				</div>
+			@endif
+		</div>
+	@endif
     <!-- Column -->
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
@@ -64,7 +73,7 @@
 	            	@foreach($tabs as $item)
 		                <li class="nav-item"> 
 		                	<a class="nav-link tab-link" 
-		                		data-url="{{ url($item->url) }}"  href="#{{ $item->slug }}" role="tab">
+		                		data-url="{{ route($item->route) }}"  href="#{{ $item->slug }}" role="tab">
 		                		@lang('profile-tabs-list.' . $item->slug)
 		                	</a> 
 		                </li>
@@ -91,7 +100,7 @@
 <script>
 	@if($tab = $tabSelected())
 		$('#{{$tab->slug}}')
-			.load('{{ url($tab->url) }}', function() {
+			.load("{{ route($tab->route) }}", function() {
 				$('#spinner').hide();
 			});
 

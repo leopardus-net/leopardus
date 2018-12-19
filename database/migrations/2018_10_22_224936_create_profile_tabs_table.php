@@ -17,7 +17,7 @@ class CreateProfileTabsTable extends Migration
             $table->increments('id');
             $table->string('icon')->nullable();
             $table->string('slug');
-            $table->string('url');
+            $table->string('route');
             $table->integer('order')->default(0);
             $table->string('type')->default('profile');
             $table->timestamps();

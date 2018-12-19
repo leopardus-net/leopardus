@@ -82,7 +82,7 @@
                             </small> 
                         </div>
                     </div>
-                    <div class="form-group row" >
+                    <!--<div class="form-group row" >
                         <label class="control-label text-right col-md-3">
                             @lang('settings-basic.form.type')
                         </label>
@@ -95,7 +95,7 @@
                                 @lang('settings-basic.form.type') 
                             </small> 
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group row" >
                         <label class="control-label text-right col-md-3">
                             @lang('settings-basic.form.company_name')
@@ -207,9 +207,7 @@
                             @lang('settings-basic.form.logo_text')
                         </label>
                         <div class="col-md-9">
-                            @if( $settings->logo_text )
-                                <img src="{{ asset($settings->logo_text) }}" alt="logo" class="img-thumbnail" style="margin-bottom: 20px"><br>
-                            @endif
+                            <img src="{{ asset($settings->logo_text ? $settings->logo_text : 'assets/images/logo-text.png') }}" alt="logo" class="img-thumbnail" style="margin-bottom: 20px"><br>
                             <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light">
                                 <span><i class="ion-upload m-r-5"></i>@lang('settings-basic.form.upload_logo_text')</span>
                                 <input type="file" name="logo_text" class="upload">
@@ -221,9 +219,7 @@
                             @lang('settings-basic.form.logo_icon')
                         </label>
                         <div class="col-md-9">
-                            @if( $settings->logo_icon )
-                                <img src="{{ asset($settings->logo_icon) }}" alt="logo" class="img-thumbnail" style="margin-bottom: 20px"><br>
-                            @endif
+                            <img src="{{ asset($settings->logo_icon ? $settings->logo_icon : 'assets/images/logo-icon.png' ) }}" alt="logo" class="img-thumbnail" style="margin-bottom: 20px"><br>
                             <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light">
                                 <span><i class="ion-upload m-r-5"></i>@lang('settings-basic.form.upload_logo_icon')</span>
                                 <input type="file" name="logo_icon" class="upload">

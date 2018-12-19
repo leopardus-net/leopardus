@@ -100,6 +100,27 @@
     <!--Custom JavaScript -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
+    <script>
+        // ============================================================== 
+        // Auto select left navbar
+        // ============================================================== 
+        $(function () {
+            var url = '{{ $page }}';
+            var element = $('ul#sidebarnav a').filter(function () {
+                return this.href == url;
+            }).addClass('active').parent().addClass('active');
+
+            while (true) {
+                if (element.is('li')) {
+                    element = element.parent().addClass('in').parent().addClass('active');
+                }
+                else {
+                    break;
+                }
+            } 
+        });
+    </script>
+
     @yield('scripts')
 </body>
 

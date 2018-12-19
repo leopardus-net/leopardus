@@ -4,123 +4,111 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
-// Manegador de idiomas.
-use Barryvdh\TranslationManager\Models\Translation;
-use Barryvdh\TranslationManager\Manager;
+use App\Permission;
+use App\PermissionGroup;
 
 class PermissionsController extends Controller
 {
-	// Manejador de idiomas.
-    protected $lang_manager;
-
-    public function __construct(Manager $lang_manager)
+    public function __construct()
     {
-        // Manejador de idiomas.
-        $this->lang_manager = $lang_manager;
+        // Pagina para el menú
+        $page = route('permissions.index');
+
+        // Compartimos la variable
+        view()->share(compact('page'));
     }
+
 
     public function index()
     {
-        $role = Role::first();
-        $roles = Role::all();
-        $permission = Permission::all();
-        $data = $this->parsePermissions($permission, $role);
-
-        // Pasamos las variables a la vista.
-        view()->share(compact('roles', 'permission', 'data', 'role'));
-
-        // 
-    	return view('admin.permissions.index');
+        $permissions = PermissionGroup::with('permissions')->get();
+  
+    	return view('admin.permissions.index', compact('permissions'));
     }
 
-    public function getRole(Request $request, $id)
+    public function store(Request $request)
     {
-        $role = Role::find( $id );
-        
-        if(! $role) {
-            return redirect('admin/permissions');
+        # validaciones.
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => [
+                'required',
+                Rule::unique((new \App\Permission)->getTable(), 'name')
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                        ->route('permissions.index')
+                        ->withErrors($validator)
+                        ->withInput();
         }
 
-        $roles = Role::all();
-        $permission = Permission::all();
-        $data = $this->parsePermissions($permission, $role);
+        # store
+        permissions()
+            ->group($request->group)
+            ->create(['name' => $request->name, 'slug' => $request->slug]);
 
-        // Pasamos las variables a la vista.
-        view()->share(compact('roles', 'permission', 'data', 'role'));
+        # return
+        return redirect()->back()->with('action', 'created');
+    }
 
-        // 
-        return view('admin.permissions.index');
+    public function modify(Request $request, $id)
+    {
+        $groups = PermissionGroup::with('permissions')->get();
+        $permission = Permission::findOrFail($id);
+
+        # return.
+    	return view('admin.permissions.update', compact('groups', 'permission'));
     }
 
     public function update(Request $request, $id)
     {
-    	if( $id > 1 ) {
-	        $role = Role::find( $id );
-	        $roles = Role::all();
-	        $permission = Permission::all();
-	        $data = $this->parsePermissions($permission, $role);
+        $permission = Permission::findOrFail($id);
 
-	        $update = true;
+        # validaciones.
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => [
+                'required',
+                Rule::unique((new \App\Permission)->getTable(), 'name')
+                    ->ignore($permission->name, 'name')
+                    ->ignore($permission->id)
+            ],
+            'group' => 'required'
+        ]);
 
-	        // Pasamos las variables a la vista.
-	        view()->share(compact('roles', 'permission', 'data', 'role', 'update'));
-
-	        // 
-	        return view('admin.permissions.index');
-    	} else {
-    		return redirect()->back();
-    	}
-    }
-
-    public function store(Request $request, $id = null)
-    {
-        if( is_null($id) ) {
-        	// Creamos el role
-            $role = Role::create([
-            	'name' => str_slug($request->name, '-')
-            ]);
-
-            // Creamos una nueva traducción para el role
-            $translation = new Translation;
-            $translation->locale = 'es';
-            $translation->group = 'roles-list';
-            $translation->key = str_slug($request->name, '-');
-            $translation->value = $request->name;
-            $translation->status = Translation::STATUS_SAVED;
-            $translation->save();
-        } else {
-        	// Obtenemos el role
-            $role = Role::find($id);
-
-             // Obtenemos la traducción
-            $translation = Translation::firstOrNew([
-                'locale' => session('lang') ?: 'es',
-                'group' => 'roles-list',
-                'key' => $role->name,
-            ]);
-
-            // Cambiamos la traducción.
-            $translation->value = (string) $request->name;
-            $translation->status = Translation::STATUS_CHANGED;
-            $translation->save();
+        if ($validator->fails()) {
+            return redirect()
+                        ->route('permissions.index')
+                        ->withErrors($validator)
+                        ->withInput();
         }
 
-        // Exportamos nuevamente los archivos a la carpeta LANG
-        $this->lang_manager->exportTranslations('roles-list', false);
+        # store
+        permissions($permission->id)
+            ->group($request->group)
+            ->update([
+                'name' => $request->name, 
+                'slug' => $request->slug
+            ]);
 
-        return redirect("admin/permissions/role/$role->id");
+        # return
+        return redirect()->route('permissions.index')->with('action', 'updated');
     }
 
     public function destroy(Request $request, $id)
     {
-        Role::destroy($id);
-
-        return redirect("admin/permissions")
-                ->with('message', trans('roles.message_delete'));
+        # get
+        $permission = Permission::find($id);
+        # delete
+        $permission->delete();
+        # return
+        return redirect()->back()->with('action', 'deleted');
     }
 
     public function togglePermissionToRole(Request $request)

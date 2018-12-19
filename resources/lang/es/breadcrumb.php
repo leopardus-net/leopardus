@@ -7,5 +7,9 @@ return array (
   'admin' => 'Panel de administración',
   'security' => 'Seguridad',
   'languajes' => 'Idiomás',
-  'system' => 'Sistema'
+  'system' => 'Sistema',
+  'permissions' => 'Permisos',
+  'roles' => 'Roles',
+  'users' => 'Usuarios',
+
 );

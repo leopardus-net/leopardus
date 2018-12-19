@@ -14,6 +14,7 @@ class CreateLeftSidebarsTable extends Migration
     public function up()
     {
         Schema::create('left_sidebars', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slug');
             $table->integer('order')->default(0);

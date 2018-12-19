@@ -23,7 +23,7 @@
             <h3 class="text-themecolor">{{ trans('permissions.breadcrumb.title') }}</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans('breadcrumb.admin') }}</a></li>
-                <li class="breadcrumb-item active">{{ trans('breadcrumb.system') }}</li>
+                <li class="breadcrumb-item active">{{ trans('breadcrumb.security') }}</li>
             </ol>
         </div>
         <div class="col-md-7 col-4 align-self-center">
@@ -39,77 +39,57 @@
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     <div class="row">
-        @if( isset( $role ) )
-            <div class="col-xs-12 col-lg-12">
-                <h4>Rol seleccionado: <strong>@lang("roles-list.$role->name")</strong></h4>
-                <br>
-            </div>
-        @endif
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" data-form="deleteForm">
-                            <thead>
-                                <tr>
-                                    <th>{{ trans('permissions.list_rol') }}</th>
-                                    <th width="130px" class="text-nowrap"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse( $roles as $rol )
-                                <tr>
-                                    <td>
-                                        <a href="{{ route('roles.get', [$rol->id]) }}">
-                                            @if( $rol->id == $role->id)
-                                                <strong>@lang("roles-list.$rol->name")</strong>
-                                            @else
-                                                @lang("roles-list.$rol->name")
-                                            @endif
-                                        </a>
-                                    </td>
-                                    <td width="130px">
-                                    @if( $rol->id != 1 )
-                                        <a href="{{ route('roles.edit', $rol->id) }}" class="btn btn-info btn-xs" style="float:left;">{{ trans('permissions.edit') }}</a>
+        <div class="col-sm-12">
+            @if($errors->any())
+              <div class="alert alert-danger">
+                  <ul class="no-margin" style="margin: 0">
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              <br>
+            @endif
 
-                                        {!! \Form::model($rol, ['method' => 'delete', 'route' => ['roles.destroy', $rol->id], 'class' =>'form-inline form-delete']) !!}
-                                        {!! \Form::hidden('id', $rol->id) !!}
-                                        {!! \Form::submit(trans('permissions.delete'), ['class' => 'btn btn-xs btn-danger delete', 'name' => 'delete_modal']) !!}
-                                        {!! \Form::close() !!}
-                                    @endif
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="2">{{ trans('permissions.empty') }}</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+            @if(session('action'))
+                <div class="alert alert-success">
+                    {{ trans('permissions.alerts.' . session('action')) }}
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                    @foreach($permissions as $group)
+                        <table class="table table-striped table-bordered" data-form="deleteForm">
                             <thead>
                                 <tr>
-                                    <th width="100%">{{ trans('permissions.list_permission') }}</th>
-                                    <th class="text-nowrap"></th>
+                                    <th width="40%">{{ trans('permissions-group-list.' . $group->slug) }}</th>
+                                    <th></th>
+                                    <th width="21%" class="text-nowrap"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse( $permission as $perm )
+                                @forelse( $group->permissions as $perm )
                                     <tr>
-                                        <td>{{ trans("permissions-list.$perm->name") }}</td>
-                                        <td class="text-nowrap">
-                                            <div class="switch">
-                                                <label>OFF
-                                                    <input @if($perm->checked) checked="" @endif type="checkbox" onclick="setPermissionRole({{ $perm->id }}, {{ $role->id }})"><span class="lever"></span>ON</label>
-                                            </div>
+                                        <td width="40%" class="text-center">{{ trans("permissions-list.$perm->name") }}</td>
+                                        <td>{{ $perm->name }}</td>
+                                        <td width="21%">
+                                            <form class="form-delete text-center" method="POST" style="display: inline-block;margin-right:5px" 
+                                                action="{{ route('permissions.destroy', $perm->id) }}"> 
+                                                @csrf
+                                                @method('delete')
+                                                <button name="delete-modal" data-toggle="tooltip" 
+                                                    data-original-title="@lang('permissions.delete-btn')" 
+                                                    class="btn text-white btn-danger"> 
+                                                    <i class="fas fa-trash"></i> 
+                                                </button>
+                                            </form>  
+                                            <a class="btn btn-warning" 
+                                                href="{{ route('permissions.modify', $perm->id) }}" 
+                                                data-toggle="tooltip" 
+                                                data-original-title="@lang('permissions.update-btn')">
+                                                <i class="fas fa-pencil-alt text-white"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty
@@ -119,6 +99,7 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    @endforeach
                     </div>
                 </div>
             </div>
@@ -129,18 +110,10 @@
     @include('modals.confirm-delete')
 
     @include('admin.permissions.modals.new')
-
-    @if( isset($update) && $update  )
-        @include('admin.permissions.modals.update')
-    @endif
-
 @stop
 
 @section('scripts')
     <script>
-        @if( isset($update) && $update )
-            $('#updateModal').modal('show')
-        @endif
 
         $('table[data-form="deleteForm"]').on('click', '.form-delete', function(e){
             e.preventDefault();
@@ -173,5 +146,10 @@
                 }
             });
         }
+
+        $('#permission-name').bind( "keyup", function() {
+            $string = string_to_slug($(this).val(), '-');
+            $('#permission-slug').val($string);
+        });
     </script>
 @stop

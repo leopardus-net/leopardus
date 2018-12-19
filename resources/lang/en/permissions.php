@@ -1,31 +1,38 @@
 <?php
 
 return array (
-  'title' => 'Roles y permisos',
-  'list_rol' => 'Listado de Roles',
-  'list_permission' => 'Listado de permisos',
+  'title' => 'Permisos',
+  'name' => 'Nombre',
+  'slugs' => 'Slug',
   'actions' => 'Acciones',
   'status' => 'Estado',
   'empty' => 'No existen registros.',
-  'new' => 'Agregar un rol',
+  'new' => 'Agregar un permiso',
   'edit' => 'Editar',
   'delete' => 'Borrar',
+  'update-btn' => 'Modificar',
+  'delete-btn' => 'Eliminar',
   'breadcrumb' => 
   array (
-    'title' => 'Roles y permisos',
-    'home' => 'Inicio',
-    'dashboard' => 'Tablero',
-    'config' => 'Configuración',
+    'title' => 'Permisos',
   ),
   'modal' => 
   array (
-    'update' => 'Modificar rol:',
+    'update' => 'Modificar permiso:',
     'name' => 'Nombre:',
     'close' => 'Cerrar',
     'save' => 'Guardar cambios',
+    'slug' => 'Slug',
+    'group' => 'Grupo de permisos',
+    'select-group' => 'Selecciona el grupo de permiso'
   ),
-  'revoke-rol' => 'Rol eliminado exitosamente.',
-  'revoke-permission' => 'Permiso eliminado existosamente.',
-  'add-permission' => 'Permiso agregado exitosamente.',
-  'error_role_permission_not_found' => 'Rol o permiso incorrecto, revise e intente nuevamente.',
+  'update' => [
+    'title' => 'Modificación de permiso'
+  ],
+  'back' => 'Volver',
+  'alerts' => [
+    'created' => 'Permiso creado exitosamente',
+    'updated' => 'Permiso modificado exitosamente',
+    'deleted' => 'Permiso eliminado exitosamente'
+  ]
 );

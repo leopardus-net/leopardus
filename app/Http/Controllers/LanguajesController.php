@@ -7,6 +7,15 @@ use App\Languaje;
 
 class LanguajesController extends Controller
 {
+    public function __construct()
+    {
+        // Pagina para el menú
+        $page = route('languajes.index');
+
+        // Compartimos la variable
+        view()->share(compact('page'));
+    }
+    
     //
     public function index()
     {

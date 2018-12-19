@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class LeftSidebarItem extends Model
 {
+    use HasRoles;
+
 	protected $table = 'left_sidebars_items';
-	
+    protected $guard_name = 'web';
+    
     //
     public function children()
     {
@@ -17,10 +21,5 @@ class LeftSidebarItem extends Model
     public function parent()
     {
     	return $this->belongsTo(LeftSidebarItem::class, 'parent_id');
-    }
-
-    public function permissions()
-    {
-    	return $this->belongsToMany(Spatie\Permission\Models\Permission::class, 'left_sidebar_items_permissions', 'sidebar_item_id', 'permission_id');
     }
 }

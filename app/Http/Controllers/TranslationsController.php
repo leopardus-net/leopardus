@@ -16,6 +16,13 @@ class TranslationsController extends Controller
     public function __construct(Manager $langManager)
     {
         $this->langManager = $langManager;
+      
+        // Pagina para el menú
+        $page = route('permission:translations.view');
+
+        // Compartimos la variable
+        view()->share(compact('page'));
+    
     }
 
     public function index($group = null)

@@ -9,12 +9,11 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 @foreach( $leftSidebar as $sidebar )
-                    
                     <li class="nav-small-cap" style="text-transform: uppercase;">
                         @lang("left-sidebar.$sidebar->slug.name")
                     </li>
 
-                    @foreach( $sidebar->items as $item )
+                    @foreach( $sidebar->getItemsByPermissions($member->getAllPermissions()) as $item )
                         <li>
                             <a class="@if( $item->children->count() ) has-arrow @endif waves-effect waves-dark" 
                                 href="{{ $item->route ? url( $item->route ) : '#' }}" aria-expanded="false">
@@ -47,8 +46,8 @@
                             @endif
                         </li>
                     @endforeach
-                    
-                    <li class="nav-devider"></li>
+
+                    <li class="nav-devider"></li> 
                 @endforeach
                 <br>
             </ul>
@@ -73,6 +72,6 @@
         </div>
     <!-- End Bottom points-->
 </aside>
-<!-- ============================================================== -->
-<!-- End Left Sidebar - style you can find in sidebar.scss  -->
-<!-- ============================================================== -->
+
+
+    

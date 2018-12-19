@@ -12,16 +12,16 @@ class CreateTranslationsTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('ltm_translations', function(Blueprint $table)
-        {
-            $table->increments('id');
-            $table->integer('status')->default(0);
-            $table->string('locale');
-            $table->string('group');
-            $table->text('key');
-            $table->text('value')->nullable();
-            $table->timestamps();
-        });
+		Schema::create('ltm_translations', function(Blueprint $table) {
+			$table->engine = 'InnoDB';
+			$table->increments('id');
+			$table->integer('status')->default(0);
+			$table->string('locale');
+			$table->string('group');
+			$table->text('key');
+			$table->text('value')->nullable();
+			$table->timestamps();
+		});
 	}
 
 	/**
@@ -31,7 +31,7 @@ class CreateTranslationsTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('ltm_translations');
+		Schema::drop('ltm_translations');
 	}
 
 }

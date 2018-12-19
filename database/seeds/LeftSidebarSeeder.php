@@ -27,9 +27,15 @@ class LeftSidebarSeeder extends Seeder
                         ],
 	    				'icon' => 'ti-dashboard',
 	    				'route' => 'admin/dashboard',
-	    				'items' => []
+						'items' => [],
+						'permissions' => [
+							'dashboard.view'
+						]
         			]
-        		]
+				],
+				'permissions' => [
+					'dashboard.view'
+				]
         	],
         	[
         		'name' => [
@@ -53,31 +59,37 @@ class LeftSidebarSeeder extends Seeder
         							'en' => 'Basic',
                                     'pt' => 'Basic'
         						],
-        						'route' => 'admin/settings/basic'
+								'route' => 'admin/settings/basic',
+								'permissions' => [
+									'settings.basic.view'
+								]
         					],
-                            [
-                                'name' => [
-        							'es' => 'Menú Lateral',
-        							'en' => 'Left Sidebar',
-                                    'pt' => 'Menu Lateral'
-        						],
-                                'route' => 'admin/settings/left-sidebar'
-                            ],
-                            [
-                                'name' => [
-        							'es' => 'Cabecera',
-        							'en' => 'Header',
-                                    'pt' => 'Cabeçalho'
-        						],
-                                'route' => 'admin/settings/header'
-                            ],
+                            // [
+                            //     'name' => [
+        					// 		'es' => 'Menú Lateral',
+        					// 		'en' => 'Left Sidebar',
+                            //         'pt' => 'Menu Lateral'
+        					// 	],
+                            //     'route' => 'admin/settings/left-sidebar'
+                            // ],
+                            // [
+                            //     'name' => [
+        					// 		'es' => 'Cabecera',
+        					// 		'en' => 'Header',
+                            //         'pt' => 'Cabeçalho'
+        					// 	],
+                            //     'route' => 'admin/settings/header'
+                            // ],
                             [
                                 'name' => [
         							'es' => 'Idiomás',
         							'en' => 'Languajes',
                                     'pt' => 'Idiomás'
         						],
-                                'route' => 'admin/settings/languajes'
+                                'route' => 'admin/settings/languajes',
+								'permissions' => [
+									'languaje.view'
+								]
                             ],
         					[
         						'name' => [
@@ -85,9 +97,17 @@ class LeftSidebarSeeder extends Seeder
         							'en' => 'Translations',
                                     'pt' => 'Traduções'
         						],
-        						'route' => 'admin/settings/translations'
+        						'route' => 'admin/settings/translations',
+								'permissions' => [
+									'translations.view'
+								]
         					],
-        				]
+        				],
+						'permissions' => [
+							'settings.basic.view',
+							'languaje.view',
+							'translations.view'
+						]
         			],
         			[
                         'name' => [
@@ -98,13 +118,27 @@ class LeftSidebarSeeder extends Seeder
                         'icon' => 'ti-lock',
                         'route' => 'admin/permissions',
 		                'items' =>   [
+							[
+								'name' => [
+								  'es' => 'Roles',
+								  'en' => 'Roles',
+								  'pt' => 'Função'
+								],
+								'route' => 'admin/roles',
+								'permissions' => [
+									'roles.view'
+								]
+							],
 		                  	[
 		                  		'name' => [
-									'es' => 'Roles y permisos',
-									'en' => 'Functions and permissions',
-		                            'pt' => 'Funções e autorizações'
+									'es' => 'Permisos',
+									'en' => 'Permissions',
+		                            'pt' => 'Autorizações'
 								],
-		                        'route' => 'admin/permissions'
+		                        'route' => 'admin/permissions',
+								'permissions' => [
+									'permissions.view'
+								]
 		                    ],
 		                    [
 		                        'name' => [
@@ -112,12 +146,28 @@ class LeftSidebarSeeder extends Seeder
 									'en' => 'Users',
 		                            'pt' => 'Usuários'
 								],
-		                        'route' => 'admin/users'
+		                        'route' => 'admin/users',
+								'permissions' => [
+									'users.view'
+								]
 		                    ]
-		                ]
+		                ],
+						'permissions' => [
+							'roles.view',
+							'permissions.view',
+							'users.view'
+						]
                     ]
         		],
-                'order' => 1000
+				'order' => 1000,
+				'permissions' => [
+					'settings.basic.view',
+					'languaje.view',
+					'translations.view',
+					'roles.view',
+					'permissions.view',
+					'users.view'
+				]
         	],
         ];
 
