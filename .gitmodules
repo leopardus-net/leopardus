@@ -1,0 +1,3 @@
+[submodule "modules/Install"]
+	path = modules/Install
+	url = https://github.com/leopardus-net/Install-module.git
