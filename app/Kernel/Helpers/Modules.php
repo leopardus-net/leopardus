@@ -25,7 +25,7 @@ class Modules
 
 		$cache = cache("module['$slug_module']");
 
-		if( !$cache ) {
+		if( \Schema::hasTable('modules') && !$cache) {
 
 			$_moduleCount = \App\Module::where('name', $module)->count();
 
@@ -41,6 +41,8 @@ class Modules
 			}
 
 			return false;
+		} else {
+
 		}
 
 		return $cache;
@@ -49,7 +51,7 @@ class Modules
 	public function install(callable $callback)
 	{
 		// Verificamos si el modulo esta instalado.
-		if(!$this->isInstalled()) {
+		if(\Schema::hasTable('modules') && !$this->isInstalled()) {
 
 			// Obtenemos las dependencias.
 			$dependencias = $this->module->requires;

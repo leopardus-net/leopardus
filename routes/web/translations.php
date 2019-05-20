@@ -17,22 +17,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	    Route::group(['prefix' => 'translations'], function($router) {
 	        /* @start('translations') */
             $router->get('view/{groupKey?}', 'TranslationsController@getView')->where('groupKey', '.*')
-                ->middleware('permission:translations.groups-view');
+                ->middleware('permission:translations.groups');
 
             $router->get('/{groupKey?}', 'TranslationsController@index')->where('groupKey', '.*')
+                ->name('admin.translations.index')
                 ->middleware('permission:translations.view');
                 
             $router->post('/groups/add', 'TranslationsController@postAddGroup')
                 ->middleware('permission:translations.groups-store');
 
             $router->post('/add/{groupKey}', 'TranslationsController@postAdd')->where('groupKey', '.*')
-                ->middleware('permission:translations.keys-store');
+                ->middleware('permission:translations.key-store');
 
             $router->post('/edit/{groupKey}', 'TranslationsController@postEdit')->where('groupKey', '.*')
-                ->middleware('permission:translations.keys-update');
+                ->middleware('permission:translations.key-update');
 
             $router->post('/delete/{groupKey}/{translationKey}', 'TranslationsController@postDelete')->where('groupKey', '.*')
-                ->middleware('permission:translations.keys-store');
+                ->middleware('permission:translations.key-store');
 
             $router->post('/import', 'TranslationsController@postImport')
                 ->middleware('permission:translations.import');

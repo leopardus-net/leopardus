@@ -18,7 +18,7 @@ class TranslationsController extends Controller
         $this->langManager = $langManager;
       
         // Pagina para el menú
-        $page = route('permission:translations.view');
+        $page = route('admin.translations.index');
 
         // Compartimos la variable
         view()->share(compact('page'));
